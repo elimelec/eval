@@ -1,0 +1,339 @@
+{\rtf0\ansi{\fonttbl\f3\fswiss Helvetica;\f4\fmodern Ohlfs;}
+\paperw13080
+\paperh6840
+\margl140
+\margr1620
+{\colortbl\red0\green0\blue0;}
+\pard\tx1056\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\f3\b\i0\ul0\qc\fs24\fi700 Eval
+\b0 \
+\
+
+Glen Diener\
+Center for Computer Research in Music and Acoustics (CCRMA)\
+Dept. of Music\
+Stanford University\
+grd@ccrma.stanford.edu\
+
+\qr \
+
+\ql\fi0 \
+\
+
+\fi720 Eval is a service provider for anything that writes ascii\
+to the pasteboard.  It can do two things: compile, load,\
+and execute the selection as ObjC code, or interpret the\
+selection as postScript.  Eval manages a window, called the\
+ "Transcript",  with both a text view and a graphics view.\
+ ObjC output  or postscrip output can be directed to these\
+windows.\
+
+\fi0 \
+
+\b Installing
+\b0 \
+\
+
+\li740 Eval runs as a "service".  To install it, copy the Eval executable into ~/Apps or /LocalApps (you must be be root to install in /LocalApps).  Then logout and log back in again.  The "Eval" option should now appear in the services menus of Edit, Terminal, Librarian,  WriteNow, and many other Apps.  Any application which can print ascii text to the pasteboard should show the "Eval" .\
+\
+If Eval does not appear, try deleting the files ".applit" and ".cache" in ~/NeXT/services, then log back out and log back in.  This will regenerate these files automatically.  \
+\
+The readme for MailHelper1.1 also suggests the following...\
+\
+
+\fi1440\li0\fc0 There is a report of applications not recognized if\
+installed in /LocalApps with 2.0 release OS. This is\
+apparently a bug in Release 2.0.  It should work fine with\
+2.1.  To make it work with release 2.0, do in Terminal: \
+\
+  dwrite Workspace ApplicationPaths \
+"~/Apps:/LocalApps:/NextApps:/NextDeveloper/Apps:\
+   /NextAdmin:/NextDeveloper/Demos"\
+	(This should be all on one line.)\
+
+\fi0\li740 \
+
+\fi740\li0 \
+\
+
+\b\fi0 Running Eval
+\b0 \
+\
+
+\fi700 Eval is run by selecting text in your application, then selecting either the "ObjC" or\
+the "PostScript" options in Eval's services menu.  Assuming you have installed\
+Eval, then try working through the following examples.  In might be useful to\
+"tear off" the Eval services menu to make things more convenient.\
+\
+
+\fi740 Select the following line of ObjC code, then execute the menu item "ObjC"\
+
+\fi0 \
+
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\f4\fs22 	[Eval printf: "Hello world\\n"] ;\
+
+\pard\tx1056\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 \
+
+\f3\fs24\fi720 You should see Eval's transcript window pop up, with the phrase "Hello World"\
+written into the lower view. \
+\
+ Let's examine the above code."Eval" , the message receiver,\
+is the name of a "prelinked" class which understands a number of useful\
+class messages.  One of these, printf:, works exactly like good old printf(), except that\
+it always writes to the transcript's text view,  concatenating its output to the contents\
+of that view. You can clear the text in Eval's text view by pressing the "Clear Text" button.\
+Clear it now, then evaluate the following ObjC code to see how printf: accepts a\
+variable number of arguments, just as printf() does...\
+
+\f4\fs22\fi0 \
+
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	int i, j = 0 ;\
+
+\pard\tx1496\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	for(i = 1 ; i <= 100 ; i++)\
+
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560  	 j += i ;\
+
+\pard\tx1456\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	[Eval printf: "%s %d\\n","The answer is ", j] ;\
+
+\pard\tx1056\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 \
+
+\f3\fs24\fi720 If you need to #import anything into the code, no problem. Just be sure\
+you leave at least one blank line between the #import (#define, whatever), \
+and the rest of your code (more on this later).  Evaluate the following ObjC....\
+
+\f4\fs22\fi0 \
+
+\pard\tx1476\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\fc0 	#import <sys/dir.h>\
+	// Print a listing of the root directory.\
+	// Note: 1 or more blank lines seperate #defines from code\
+
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 \
+           int i,fileCount ;\
+
+\fc0 	struct direct **filesList ;\
+
+	char *aPath = "/" ;\
+
+	
+\pard\tx1056\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\fc0 fileC
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\fc0 ou
+\pard\tx1056\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\fc0 nt = scandir(aPath,&filesList,NULL,NULL) ;
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\fc0 \
+	
+\pard\tx1496\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\fc0 for(i = 0 ; i < fileC
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\fc0 ou
+\pard\tx1496\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\fc0 nt ; i++)
+\pard\tx1056\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\fc0 \
+
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	   [Eval  printf: "%s\\n", (*filesList[i]).d_name] ;\
+
+\pard\tx1056\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 \
+\
+
+\f3\fs24\fi720 Eval's upper view is used for displaying postscript graphics output.  Select the\
+following, then choose Eval's   PostScript menu item...\
+
+\fi0 \
+
+\f4\fs22 \
+
+\pard\tx1496\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	/Times-Roman findfont\
+
+\pard\tx1456\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	20 scalefont setfont\
+	10 10 moveto\
+
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	(Hello world) show\
+
+\pard\tx1056\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 \
+\
+
+\f3\fs24\fi720 You can see how Eval functions like a ready-to-use version of Yap.\
+Unlike Yap, however,  Eval let's you generate postscript via ObjC, using Eval's\
+ps: class message.  Clear the graphics (using the Clear Graphics button),\
+then evaluate the following as ObjC...
+\f4\fs22 \
+
+\fi0 \
+\
+
+\pard\tx1496\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	[Eval ps: \
+
+\pard\tx1456\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560  	  "/Helvetica findfont "\
+
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	  "50 scalefont setfont "\
+
+\pard\tx1456\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	  "10 10 moveto "\
+
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	  "(c'est quoi ca?) show "\
+
+\pard\tx1476\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	] ;\
+
+\pard\tx1056\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 \
+\
+
+\f3\fs24\fi700 As shown in the following example, Eval's ps: method can accept arguments,\
+just like its printf: method.  The example also shows Eval's clearGraphics class\
+method, which accomplishes programmatically what hitting the Clear Graphics button\
+accomplushes manually.\
+
+\f4\fs22\fi0 \
+\
+
+\pard\tx1456\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	int i ;\
+
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	for(i = 1 ; i < 10 ; i++)\
+	\{ [Eval clearGraphics] ;\
+
+ 	  [Eval ps: \
+
+\pard\tx1456\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560    	   "/Helvetica findfont "\
+
+   	   "%d scalefont setfont "\
+
+   	   "%d %d  moveto "\
+
+   	   "(Hello world) show ",\
+
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560   	    i * 10, i * 5, i * 10\
+
+  	  ] ;\
+
+\pard\tx1456\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560   	  NXPing() ;\
+
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560  	  usleep(500000) ; // sleep for half a second\
+
+\pard\tx1456\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	\}\
+
+\pard\tx1056\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 \
+
+\f3\fs24\fi720 If "Hello world" has become too big and  is no longer completely visible\
+in the Graphics view, use the scrollers to view it all (or resize the window!).\
+
+\fi0 \
+
+\fi740 The safest way to do postscript is to use  either Eval's ps: method or to just\
+evaluate straight postscript using the Services/Eval/PostScript item.  In both\
+cases, the postscript sent to the window server is wrapped in error-handling code\
+to catch errors, which will be reported in the text view.  Both of these methods\
+also wrap the postscript in a gsave/grestore pair, so if you want to build up state\
+between calls to these methods, you can't use these methods.\
+
+\fi0 \
+
+\fi740 The alternative is to braket ObjC code within [Eval startPS] and\
+[Eval stopPS] messages.  startPS takes care of "locking focus"\
+on the graphics view's underlying NXImage.  stopPS unlocks it\
+composites the image to the graphics view, and flushes the window.\
+The following example illustrates this technique...\
+
+\f4\fs22\fi0 \
+\
+
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	#import <math.h>\
+	#import <dpsclient/psops.h>\
+
+\pard\tx1056\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 \
+
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	float x ;\
+
+\pard\tx1456\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	#define PI 3.14159\
+
+\pard\tx1396\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	[Eval clearGraphics] ;\
+
+\pard\tx1456\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	[Eval ps:\
+
+\pard\tx1416\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560  	 "0 100 moveto 250 100 lineto stroke"] ;\
+
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	[Eval startPS] ;\
+	PSmoveto(0.0,100.0) ;\
+
+\pard\tx1416\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	for(x = 0.0 ; x <= 4.0 * PI ; x += 0.05)\
+
+  	  PSlineto(x * 20.0, sin(x) * 100.0 + 100.0) ;\
+
+\pard\tx1456\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	PSstroke() ;\
+
+\pard\tx1416\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 	[Eval stopPS] ;\
+
+\pard\tx1056\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560 \
+\
+
+\f3\b\fs24 How it works\
+\
+
+\b0\fi740 When you select code and evaluate it using the ObjC button, the Eval app sandwiches\
+your code with both a header and a footer.  It creates a complete objC class definition with\
+exactly one class method, called "doit".  It then saves the definition in a temporary file in\
+/tmp, invokes the objC compiler, then uses the objc_loadmodules call to dynamically link\
+the result into the Eval app itself.  Finally, the newly linked class is sent the "doit" message,\
+and your code is executed.  When the message returns, all the temporary files are removed.\
+\
+Actually, Eval attempts to cut your code into two sections, a "header" section, and a body\
+section.   The "header" section is placed at the beginning of the file Eval creates, and is\
+not tectually part of the "doit" method.  For more prescise details about how this works,\
+see the file "Eval.m", and, in particular, the method \
+\
+
+\pard\tx1416\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\fc0 	- evalObjC:(id) pboard userData: (const char *) uBuf error: (char **) msg ;\
+
+\pard\tx1056\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\fi740 \
+You can customize the compiler options using Eval's Preferences Panel.  The panel also\
+lets you add or remove link libraries to be searched during the dynamic linking.  The transcript's\
+text view's font and font size can be saved, and the size of the graphics view, in pixels, can\
+also me specified here.  \
+\
+\
+\
+\
+\
+
+\b\fi0 Eval Class Methods 
+\b0 \
+\
+	Definitions of the following class methods are already present in the file which Eval creates,\
+	so the code you use can simply call them directly without having to #import any headers.\
+\
+
+\pard\tx1456\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\f4\fs22\fc0 	+ clearGraphics ;\
+\
+		Clears the transcript's graphics view.\
+\
+
+\pard\tx1416\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\fc0 	+ clearText ;\
+\
+		Clears the transcript's text view.\
+\
+	+ printf: (char *) format, ... ;\
+\
+		Formats and prints text to the transcript.\
+\
+
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\fc0 	+ ps: (char *) format, ... ;\
+
+\pard\tx1416\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\fc0 \
+
+\pard\tx1420\tx2100\tx3160\tx4220\tx5280\tx6320\tx7380\tx8440\tx9500\tx10560\fc0 		"Locks focus" on the transcript's graphic's view's NXImage object,\
+		formats and prints text to the postscript window server, wrapped\
+		inside a NXHandler and bracketed by a gsave/grestore pair., then\
+		unlocks focus, composites the NXImage to the graphics view, and\
+		flushes the offscreen window.\
+
+\pard\tx1416\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\fc0 \
+
+\pard\tx1436\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\fc0 	+ startPS ;\
+\
+		"Locks focus" on the transcript's graphic's view's NXImage object.\
+		Must be followed, eventually, by a stopPS message.  Any PostScript\
+		rendered after startPS will show up in the graphics view after stopPS\
+		is sent.\
+\
+
+\pard\tx1416\tx2112\tx3168\tx4224\tx5280\tx6336\tx7392\tx8448\tx9504\tx10560\fc0 	+ stopPS ;\
+\
+		"Unlocks focus" on the transcript's graphic's view's NXImage object,\
+		then composites the image to the graphics view and flushes the window.\
+\
+\
+\
+Stanford Univ., Tuesday, Jan. 28, 1992\
+
+}

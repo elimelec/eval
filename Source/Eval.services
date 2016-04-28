@@ -1,0 +1,16 @@
+Message: evalObjC
+Port: Eval
+Send Type: NeXT plain ascii pasteboard type
+Menu Item: Eval/ObjC
+Key Equivalent: !
+
+Message: evalPs
+Port: Eval
+Send Type: NeXT plain ascii pasteboard type
+Menu Item: Eval/PostScript
+Key Equivalent: @
+
+Message: showTranscript
+Port: Eval
+Send Type: NeXT plain ascii pasteboard type
+Menu Item: Eval/Show Transcript

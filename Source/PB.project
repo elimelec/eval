@@ -1,0 +1,28 @@
+INSTALLDIR = "$(HOME)/Apps";
+APPICON = Eval.tiff;
+GENERATEMAIN = YES;
+DOCICONFILES = ();
+FILESTABLE = {
+    M_FILES = (Eval_main.m);
+    OTHER_LINKED = ();
+    H_FILES = (CString.h, Eval.h, GraphicsView.h);
+    CLASSES = (CString.m, Eval.m, GraphicsView.m);
+    IMAGES = ();
+    PSW_FILES = ();
+    C_FILES = ();
+    OTHER_SOURCES = ();
+    SUBPROJECTS = ();
+    PSWM_FILES = ();
+    SOUNDS = ();
+    OTHER_LIBS = (Media_s, NeXT_s);
+    INTERFACES = (Eval.nib);
+};
+APPCLASS = Eval;
+MAINNIB = Eval;
+DOCEXTENSIONS = ();
+PROJECTTYPE = Application;
+LOCALIZABLE_FILES = {
+};
+PROJECTVERSION = 1.1;
+PROJECTNAME = Eval;
+SYSTEMEXTENSIONS = ();
